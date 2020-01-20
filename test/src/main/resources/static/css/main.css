@@ -1,0 +1,20 @@
+
+.card-image{
+    height: 18rem;
+}
+.small-card-image{
+     height: 13rem;
+ }
+.product-image{
+    height: 32rem;
+    width: 32rem;
+}
+footer{
+    width: 100%;
+    position:fixed;
+    white-space: nowrap;
+    bottom:0;
+}
+.tdtext{
+    margin-left: 3%;
+}

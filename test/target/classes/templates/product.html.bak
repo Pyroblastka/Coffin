@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+
+    <div class="jumbotron">
+
+        <h1 class="display-4" th:text="${product.name}">Hello, world!</h1>
+        
+        <img th:src="${product.src}" class="product-image">
+        <hr class="my-4">
+        <p class="lead" th:text="${product.description}">product descriprion.</p>
+        <hr class="my-4">
+        <p th:text="'Цена '+${product.cost}+' у.е.'">cost</p>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <form action="/addtobasket" method="post">
+                <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                <button class="btn btn-success"  role="button" type="submit">Добавить в корзину</button>
+            </form>   
+            <form sec:authorize="hasRole('ROLE_ADMIN')" action="/admin/editproduct" method="get">
+                <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                <button type="submit" class="btn btn-outline-info">Редактировать</button>
+            </form>  
+            <form sec:authorize="hasRole('ROLE_ADMIN')" action="/admin/editproduct" method="post">
+                <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                <input th:value="${product.category.id}" name="category" type="number" hidden="hidden">
+                <button sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
+                        class="btn btn-outline-danger">Удалить</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

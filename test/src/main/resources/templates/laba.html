@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>laba</title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+    <div class="jumbotron">
+        <div th:switch="${state}">
+            <div th:case="1">
+                <form th:action="@{/laba}" method="post">
+                    <div class="form-group col-md-6">
+                        <label for="sq">База данных</label>
+                        <select id="sq" name="datname" class="form-control">
+                            <option th:each=" db: ${datnames}" th:value="${db}" th:text="${db}">db</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input class="form-control" th:value="Выбрать" type="submit">
+                    </div>
+                </form>
+            </div>
+            <div th:case="2">
+                <form th:action="@{/laba}" method="post">
+                    <div class="form-group col-md-6">
+                        <label for="sel">Таблица</label>
+                        <select id="sel" name="table" class="form-control">
+                            <option th:each=" tbl: ${tbls}" th:value="${tbl}" th:text="${tbl}">tablename</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input class="form-control" th:value="Выбрать" type="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <hr>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th scope="row">
+                    column_name
+                </th>
+                <th scope="row">
+                    data_type
+                </th>
+                <th scope="row">
+                    is_nullable
+                </th>
+
+            </tr>
+            <tr th:each="col: ${cols}">
+                <td th:text="${col.column_name}"> column_name</td>
+                <td th:text="${col.data_type}"> data_type</td>
+                <td th:text="${col.is_nullable}"> is_nullable</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+<!-- -------------------------------------------------- -->
+
+
+<html>
+<head>
+    <title>npHMep</title>
+    <script src="jquery-1.7.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <script type="text/javaecript">
+    $(document).ready(function () {
+    $(”img:odd”) .mouseenter(function(e) {
+    $(thie).cee("opacity", 0.5);
+    }).mouseout(£unction(e) {
+    $(this).css("opacity"/ 1.0);
+    }) ;
+    });
+
+    </script>
+</head>
+<body>
+

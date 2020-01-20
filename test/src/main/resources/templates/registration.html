@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" style="margin-top: 20px"/>
+            <h3>Добро пожаловать</h3>
+            <p>Вы уже зарегестрированы?</p>
+            <form action="/login">
+                <input class="btn btn-outline-info" type="submit" name="" value="Войти"/><br/>
+            </form>
+        </div>
+
+        <div class="col-md-9 ">
+            <h3 class="register-heading">Регистрация покупателя</h3>
+            <div th:if="${error != null}" class="alert alert-block alert-danger messages status">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+                <div th:text="${error}" ></div>
+            </div>
+            <div class="register-form">
+                <form action="/registration" method="post">
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" placeholder="Логин *" value=""
+                                   minlength="3" maxlength="20" name="username"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" placeholder="Полное имя *" required minlength="3"
+                                   maxlength="20" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <input type="email" class="form-control" placeholder="Email *" required value=""/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" maxlength="13" minlength="9" class="form-control"
+                                   placeholder="Номер телефона *" required value=""/>
+                        </div>
+                    </div>
+
+                    <div class="form-row ">
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" placeholder="Пароль *" minlength="6"
+                                   maxlength="20" value="" id="password" required name="password"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" placeholder="Подтвердить Пароль *"
+                                   minlength="6" maxlength="20" value="" id="confirm_password" required/>
+                        </div>
+                        <input type="submit" class="btn btn-outline-success" value="Подтвердить"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer"/>
+<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+
+</script>
+</body>
+</html>

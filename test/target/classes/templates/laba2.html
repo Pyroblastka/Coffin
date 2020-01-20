@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>laba</title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+    <div class="jumbotron">
+        <form action="/laba2" method="post">
+            <h1>Create user</h1>
+            <div class="form-group col-md-6">
+            <label for="username">username</label>
+            <input class="form-control" type="text" name = "username" id = "username" minlength="3">
+            <label for="password">password</label>
+            <input class="form-control" type="password" name = "password" id = "password" minlength="3">
+            <label for="insert">allow insert</label>
+            <input class="form-control" type="checkbox" name = "insert" id = "insert">
+            <label  for="update">allow update</label>
+            <input class="form-control" type="checkbox" name = "update" id = "update">
+            <label for="delete">allow delete</label>
+            <input  class="form-control" type="checkbox" name = "delete" id = "delete">
+                <input  class="form-control" type="submit" value="ok">
+            </div>
+        </form>
+ <hr>
+        <form action="/laba3" method="post">
+            <div class="form-group col-md-6">
+                <label for="sq">Пользователь</label>
+                <select id="sq" name="user" class="form-control">
+                    <option th:each=" u: ${users}" th:value="${u}" th:text="${u}">u</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <input class="form-control" th:value="Удалить" type="submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

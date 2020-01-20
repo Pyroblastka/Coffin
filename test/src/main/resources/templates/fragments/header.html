@@ -1,0 +1,122 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+
+
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+        <!--link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css"-->
+        <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <title>Haron & Co</title>
+    <!-- this is header -->
+    <nav class="navbar navbar-expand-lg navbar-collapse bg-primary">
+        <a class="navbar-brand" href="/">Haron & Co</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">На главную <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product?productId=18">Похороны</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products?catId=6">Гробы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products?catId=5">Памятники</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products?catId=7">Венки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products?catId=8">Ограды</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ритуальные услуги
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/product?productId=18">Выкопать могилу</a>
+                        <a class="dropdown-item" href="/product?productId=20">Катафалк</a>
+                        <a class="dropdown-item" href="/product?productId=43">Сопровождающий персонал</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item " href="/product?productId=251">Гравировка</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline ml-auto" action="/productq" method="get">
+                <div class="md-form my-0">
+                    <input list="results" class="form-control" type="search" name="productName" oninput="search(this)"
+                           placeholder="Поиск" aria-label="Search">
+                    <datalist id="results"></datalist>
+                </div>
+                <button href="#!" class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">Поиск</button>
+            </form>
+             
+            <div class="my-2 my-lg-0">
+                <a sec:authorize="hasRole('ROLE_ANONYMOUS')" href="/registration"
+                   class="btn btn-outline-info my-2 my-sm-0">Регистрация</a>
+                <a sec:authorize="hasRole('ROLE_ANONYMOUS')" href="/login" class="btn btn-outline-info my-2 my-sm-0">Войти</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin"
+                   class="btn btn-outline-info my-2 my-sm-0">Личный кабинет</a>
+                <a sec:authorize="hasRole('ROLE_USER')" href="/private" class="btn btn-outline-info my-2 my-sm-0">Личный
+                    кабинет</a>
+                <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-outline-info my-2 my-sm-0">Выйти</a>
+            </div>
+        </div>
+    </nav>
+    <button type="button" onclick="goBack()" style="margin-top: 20px; margin-left: 10px;"
+            class="btn btn-outline-secondary">Назад
+    </button>
+    <script>
+        function goBack() {
+            window.history.go(-1);
+        }
+
+        async function search(input) {
+
+            fetch("http://localhost:9090/searchq/?value=" + input.value, {
+                credentials: 'same-origin',
+                method: 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                }
+            }).then(response => response.json())
+                .then(products => {
+                    document.getElementById("results").innerHTML = '';
+                    for (var i of products) {
+                        var optionElement = document.createElement("option");
+                        optionElement.value = i.name;
+                        document.getElementById("results").appendChild(optionElement);
+                    }
+                });
+
+        }
+    </script>
+</div>
+
+</body>
+</html>

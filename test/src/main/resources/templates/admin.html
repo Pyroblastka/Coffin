@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+<div class="container">
+
+    <div class="starter-template">
+        <div class="jumbotron">
+            <h1>Администратор</h1>
+            <h1><a class="btn btn-outline-info" href="/admin/product">Добавить товар</a></h1>
+            <h1><a class="btn btn-outline-info" href="/getPriceFile">Price</a></h1>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="goods-tab" data-toggle="tab" href="#goods" role="tab" aria-controls="goods"
+                       aria-selected="true">Заказы</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active"  id="goods" role="tabpanel" aria-labelledby="goods-tab">
+                    <hr>
+                    <ul class="list-group">
+                        <li th:each="deal : ${deals}"
+                                data-toggle="collapse"  th:attr="data-target='#deal'+${deal.id}"
+                            class="list-group-item d-flex justify-content-between align-items-center">
+                            <div th:text="'Пользователь '+${deal.user.username}+ ' сделал заказ на ' +(${deal.product.name})">
+                            </div>
+                            <div class="my-2 my-lg-0" th:text="${deal.date}"></div>
+                            <div th:id="'deal'+${deal.id}" class="collapse" >
+                                <form action="/admin/sendmessage" method="get" >
+                                    <input name="dealid" th:value="${deal.id}" hidden>
+                                    <input class="btn btn-default" type="submit" th:value="'Написать сообщение'">
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" class="btn btn-default" value="Выход"/>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

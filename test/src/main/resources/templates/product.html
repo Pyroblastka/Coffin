@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+
+    <div class="jumbotron">
+
+        <div th:if="${bought == 1}" class="alert alert-block alert-success messages status">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            Товар <em class="placeholder" th:text="${product.name}">Гроб Солнце с деревом 3</em> добавлен <a href="/private">в корзину</a>.
+        </div>
+
+        <table>
+            <tbody>
+            <tr>
+                <td rowspan="2"> <img th:src="${product.src}" class="product-image"> </td>
+                <td valign="top" width="100%">
+                    <h1 class="display-4 tdtext" th:text="${product.name}">Hello, world!</h1>
+                    <hr class="my-4">
+                    <h2 class=" tdtext" th:text="'Цена '+${product.cost}+' у.е.'">cost</h2>
+                    <br>
+                    <p class="lead tdtext" th:text="${product.description}">product descriprion.</p>
+                </td>
+            </tr>
+            <tr>
+                <td valign="bottom">
+                    <div class=" tdtext btn-group" role="group" aria-label="Basic example">
+                        <form action="/addtobasket" method="post">
+                            <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                            <button class="btn btn-success"  role="button" type="submit">Добавить в корзину</button>
+                        </form>   
+                        <form sec:authorize="hasRole('ROLE_ADMIN')" action="/admin/editproduct" method="get">
+                            <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                            <button type="submit" class="btn btn-outline-info">Редактировать</button>
+                        </form>  
+                        <form sec:authorize="hasRole('ROLE_ADMIN')" action="/admin/deleteproduct" method="post">
+                            <input th:value="${product.id}" name="id" type="number" hidden="hidden">
+                            <input th:value="${product.category.id}" name="category" type="number" hidden="hidden">
+                            <button sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
+                                    class="btn btn-outline-danger">Удалить</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                   aria-selected="true">Корзина</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="goods-tab" data-toggle="tab" href="#goods" role="tab" aria-controls="goods"
+                   aria-selected="true">Заказы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                   aria-controls="profile" aria-selected="false">Сообщения</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <hr>
+                <ul class="list-group">
+                    <li th:each="p : ${basket.deals}" data-toggle="collapse"  th:attr="data-target='#product'+${p.id}"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        <div th:text="${p.product.name}"  >
+                        </div>
+                        <div class="my-2 my-lg-0" th:text="${p.product.cost}"></div>
+                        <div th:id="'product'+${p.id}" class="collapse" >
+                            <form action="/removefrombasket" method="post" >
+                                <input name="basketid" th:value="${basket.id}" hidden>
+                                <input name="dealid" th:value="${p.id}" hidden>
+                                <input class="btn btn-default" type="submit" th:value="Удалить">
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                <form action="/buy" method="post">
+                    <input name="basketid" th:value="${basket.id}" hidden>
+                    <br>
+                    <input class="btn btn-success" type="submit" th:value="Купить" th:text="'  Итого '+${total}">
+                </form>
+            </div>
+            <div class="tab-pane fade"  id="goods" role="tabpanel" aria-labelledby="goods-tab">
+                <hr>
+                <ul class="list-group">
+                    <li th:each="deal : ${deals}"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        <div th:text="${deal.product.name}+ ' (' +(${deal.product.cost})+')'">
+                        </div>
+                        <div class="my-2 my-lg-0" th:text="${deal.date}">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <hr>
+                <ul class="list-group">
+                    <li th:each="message : ${messages}" data-toggle="collapse"  th:attr="data-target='#demo'+${message.id}"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                            <div th:text="${message.header}"  >
+                            </div>
+                            <div class="my-2 my-lg-0" th:text="${message.date}"></div>
+                            <div th:id="'demo'+${message.id}" class="collapse" th:text="${message.text}">
+                                Lorem ipsum dolor text....
+                            </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
