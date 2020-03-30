@@ -51,12 +51,12 @@
             <version>${springtools.version}</version>
         </dependency>
         <!-- горячая подмена, выключенный кеш для шаблонов, включенный live reload -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
         <!-- опционально, подгружаем bootstrap -->
         <dependency>
             <groupId>org.webjars</groupId>
@@ -106,11 +106,11 @@
             <version>42.2.5</version>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency-->
         
     </dependencies>
 

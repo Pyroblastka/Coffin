@@ -50,6 +50,11 @@ public class AdminController {
     @Autowired
     DealRepository dealRepository;
 
+    @GetMapping("/vr")
+    public String admin() {
+        return "/vr";
+    }
+
 
     @GetMapping("/admin")
     public String admin(Model model) {
