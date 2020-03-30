@@ -60,13 +60,13 @@ public class MainController {
         Collections.sort(messages, Message::compareTo);
         model.addAttribute("messages", messages);
         model.addAttribute("total", basket.getTotalCost());
-        return "/private";
+        return "private";
     }
 
     @GetMapping("/registration")
     public String reg(Model model) {
 
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping("/registration")
@@ -90,21 +90,21 @@ public class MainController {
 
     @GetMapping("/user")
     public String user() {
-        return "/user";
+        return "user";
     }
 
     @GetMapping("/about")
     public String about() {
-        return "/";
+        return "index";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/403")
     public String error403() {
-        return "/error/403";
+        return "error/403";
     }
 }

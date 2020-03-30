@@ -52,7 +52,7 @@ public class AdminController {
 
     @GetMapping("/vr")
     public String admin() {
-        return "/vr";
+        return "vr";
     }
 
 
@@ -61,14 +61,14 @@ public class AdminController {
         List<Deal> deals =  dealRepository.findAll();
         Collections.sort(deals, Deal::compareTo);
         model.addAttribute("deals",deals);
-        return "/admin";
+        return "admin";
     }
 
     @GetMapping("/admin/sendmessage")
     public String getmessage(@RequestParam("dealid") Long id, Model model ) {
         Deal deal =  dealRepository.findById(id).get();
         model.addAttribute("deal",deal);
-        return "/sendmessage";
+        return "sendmessage";
     }
 
     @PostMapping("/admin/sendmessage")
@@ -85,7 +85,7 @@ public class AdminController {
     public String get(Model model) {
         model.addAttribute("defaultProduct", new Product());
         model.addAttribute("categories", catRepository.findAll());
-        return "/addproduct";
+        return "addproduct";
     }
 
     @PostMapping("/admin/product")
@@ -138,7 +138,7 @@ public class AdminController {
     public String editProduct(@RequestParam("id") Long id, Model model) {
         model.addAttribute("defaultProduct", productRepository.getOne(id));
         model.addAttribute("categories", catRepository.findAll());
-        return "/addproduct";
+        return "addproduct";
     }
 
     private void sendMessageToAll(Product product) {

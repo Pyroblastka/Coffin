@@ -45,7 +45,7 @@ public class ProductController {
         Product product = productRepository.getOne(productId);
         model.addAttribute("product", product);
 
-        return "/product";
+        return "product";
     }
 
     @GetMapping("/productq")
@@ -70,7 +70,7 @@ public class ProductController {
             }
         }
         model.addAttribute("product", product);
-        return "/product";
+        return "product";
     }
 
     @GetMapping("/products")
@@ -79,7 +79,7 @@ public class ProductController {
         List<Product> list = productRepository.findByCategory(catRepository.getOne(catId));
         model.addAttribute("products", list);
 
-        return "/products";
+        return "products";
     }
 
     @PostMapping("/addtobasket")
@@ -101,7 +101,7 @@ public class ProductController {
         Product product = productRepository.getOne(productId);
         model.addAttribute("product", product);
         model.addAttribute("bought", 1);
-        return "/product";
+        return "product";
     }
 
 }
